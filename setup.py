@@ -49,14 +49,15 @@ class BuildPyCommand(setuptools.command.build_py.build_py):
     """Custom build command for packaging."""
 
     def _make_thrift(self):
-        """Generate Baseplate Thrift definitions.
-        """
+        """Generate Baseplate Thrift definitions."""
         # Verify build dependencies are installed.
-        if not find_executable('make'):
+        make, thrift = (find_executable('make'),
+                        find_executable('thrift'),)
+        if not make:
             print("'make' not found.")
             exit(1)
 
-        if not find_executable('thrift'):
+        if not thrift:
             print("Thrift compiler not found.")
             exit(1)
 
