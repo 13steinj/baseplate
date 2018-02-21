@@ -51,8 +51,9 @@ class BuildPyCommand(setuptools.command.build_py.build_py):
     def _make_thrift(self):
         """Generate Baseplate Thrift definitions."""
         # Verify build dependencies are installed.
-        make, thrift = (find_executable('make'),
-                        find_executable('thrift'),)
+        make_cmd = (find_executable('make'),
+                    find_executable('thrift'),)
+        make, thrift = make_cmd
         if not make:
             print("'make' not found.")
             exit(1)
@@ -61,7 +62,6 @@ class BuildPyCommand(setuptools.command.build_py.build_py):
             print("Thrift compiler not found.")
             exit(1)
 
-        make_cmd = ['/usr/bin/make', 'thrift']
         subprocess.check_call(make_cmd)
 
     def run(self):
